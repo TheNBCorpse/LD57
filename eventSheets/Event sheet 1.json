@@ -1,0 +1,294 @@
+{
+	"name": "Event sheet 1",
+	"events": [
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "player",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-start-of-layout",
+							"objectClass": "System",
+							"sid": 632721117274972
+						}
+					],
+					"actions": [
+						{
+							"id": "add-child",
+							"objectClass": "player_collision",
+							"sid": 476036603140121,
+							"parameters": {
+								"child": "player_attackbox",
+								"transform-x": true,
+								"transform-y": true,
+								"transform-w": false,
+								"transform-h": false,
+								"transform-a": false,
+								"transform-o": false,
+								"transform-z-elevation": true,
+								"transform-visibility": false,
+								"destroy-with-parent": true
+							}
+						}
+					],
+					"sid": 143287082756515
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-key-pressed",
+							"objectClass": "keyboard",
+							"sid": 417674148739822,
+							"parameters": {
+								"key": 90
+							}
+						},
+						{
+							"id": "is-timer-running",
+							"objectClass": "player_collision",
+							"sid": 399300576040452,
+							"behaviorType": "Timer",
+							"parameters": {
+								"tag": "\"dash_cooldown\""
+							},
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "start-timer",
+							"objectClass": "player_collision",
+							"sid": 471034494782224,
+							"behaviorType": "Timer",
+							"parameters": {
+								"duration": "0.15",
+								"type": "once",
+								"tag": "\"dash\""
+							}
+						},
+						{
+							"id": "start-timer",
+							"objectClass": "player_collision",
+							"sid": 514281684019198,
+							"behaviorType": "Timer",
+							"parameters": {
+								"duration": "0.3",
+								"type": "once",
+								"tag": "\"dash_cooldown\""
+							}
+						},
+						{
+							"id": "set-ignoring-input",
+							"objectClass": "player_collision",
+							"sid": 579715506837026,
+							"disabled": true,
+							"behaviorType": "8Direction",
+							"parameters": {
+								"input": "start-ignoring"
+							}
+						}
+					],
+					"sid": 876123866079150
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-timer-running",
+							"objectClass": "player_collision",
+							"sid": 739161540808211,
+							"behaviorType": "Timer",
+							"parameters": {
+								"tag": "\"dash\""
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-max-speed",
+							"objectClass": "player_collision",
+							"sid": 594419586756333,
+							"behaviorType": "8Direction",
+							"parameters": {
+								"max-speed": "256"
+							}
+						}
+					],
+					"sid": 300063111847266
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-timer",
+							"objectClass": "player_collision",
+							"sid": 956324718825881,
+							"behaviorType": "Timer",
+							"parameters": {
+								"tag": "\"dash\""
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-ignoring-input",
+							"objectClass": "player_collision",
+							"sid": 186273632280486,
+							"disabled": true,
+							"behaviorType": "8Direction",
+							"parameters": {
+								"input": "stop-ignoring"
+							}
+						},
+						{
+							"id": "set-max-speed",
+							"objectClass": "player_collision",
+							"sid": 121967338347208,
+							"behaviorType": "8Direction",
+							"parameters": {
+								"max-speed": "64"
+							}
+						}
+					],
+					"sid": 708914101344612
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-between-values",
+							"objectClass": "System",
+							"sid": 746391073642547,
+							"parameters": {
+								"value": "round(player_collision.8Direction.MovingAngle)",
+								"lower-bound": "0",
+								"upper-bound": "45"
+							}
+						},
+						{
+							"id": "is-moving",
+							"objectClass": "player_collision",
+							"sid": 187480655796398,
+							"behaviorType": "8Direction"
+						}
+					],
+					"actions": [
+						{
+							"id": "set-angle",
+							"objectClass": "player_attackbox",
+							"sid": 159930128232936,
+							"parameters": {
+								"angle": "0"
+							}
+						}
+					],
+					"sid": 954009514855219
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-between-values",
+							"objectClass": "System",
+							"sid": 243712650492685,
+							"parameters": {
+								"value": "round(player_collision.8Direction.MovingAngle)",
+								"lower-bound": "135",
+								"upper-bound": "225"
+							}
+						},
+						{
+							"id": "is-moving",
+							"objectClass": "player_collision",
+							"sid": 178243624850012,
+							"behaviorType": "8Direction"
+						}
+					],
+					"actions": [
+						{
+							"id": "set-angle",
+							"objectClass": "player_attackbox",
+							"sid": 900073082130515,
+							"parameters": {
+								"angle": "180"
+							}
+						}
+					],
+					"sid": 776363082073679
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-between-values",
+							"objectClass": "System",
+							"sid": 572724037738748,
+							"parameters": {
+								"value": "round(player_collision.8Direction.MovingAngle)",
+								"lower-bound": "45",
+								"upper-bound": "135"
+							}
+						},
+						{
+							"id": "is-moving",
+							"objectClass": "player_collision",
+							"sid": 707737189800092,
+							"behaviorType": "8Direction"
+						}
+					],
+					"actions": [
+						{
+							"id": "set-angle",
+							"objectClass": "player_attackbox",
+							"sid": 183413483750716,
+							"parameters": {
+								"angle": "90"
+							}
+						}
+					],
+					"sid": 782655731883666
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-between-values",
+							"objectClass": "System",
+							"sid": 411520413562538,
+							"parameters": {
+								"value": "round(player_collision.8Direction.MovingAngle)",
+								"lower-bound": "-135",
+								"upper-bound": "-45"
+							}
+						},
+						{
+							"id": "is-moving",
+							"objectClass": "player_collision",
+							"sid": 716001800711305,
+							"behaviorType": "8Direction"
+						}
+					],
+					"actions": [
+						{
+							"id": "set-angle",
+							"objectClass": "player_attackbox",
+							"sid": 820027563926857,
+							"parameters": {
+								"angle": "270"
+							}
+						}
+					],
+					"sid": 226924433217893
+				}
+			],
+			"sid": 459820782109710
+		}
+	],
+	"sid": 540301125081620
+}
