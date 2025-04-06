@@ -20,7 +20,7 @@
 					"actions": [
 						{
 							"id": "add-child",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 476036603140121,
 							"parameters": {
 								"child": "player_attackbox",
@@ -42,6 +42,41 @@
 					"eventType": "block",
 					"conditions": [
 						{
+							"id": "every-tick",
+							"objectClass": "System",
+							"sid": 867104956188133
+						}
+					],
+					"actions": [
+						{
+							"id": "scroll-to-position",
+							"objectClass": "System",
+							"sid": 343271833245879,
+							"disabled": true,
+							"parameters": {
+								"x": "lerp(scrollx, player_hitbox.X, 100 * dt)",
+								"y": "lerp(scrolly, player_hitbox.Y, 100 * dt)"
+							}
+						},
+						{
+							"id": "scroll-to-object",
+							"objectClass": "System",
+							"sid": 507485483877065,
+							"parameters": {
+								"object": "player_hitbox"
+							}
+						}
+					],
+					"sid": 325192218809770
+				},
+				{
+					"eventType": "comment",
+					"text": "inputs"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
 							"id": "on-key-pressed",
 							"objectClass": "keyboard",
 							"sid": 417674148739822,
@@ -51,30 +86,46 @@
 						},
 						{
 							"id": "is-timer-running",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 399300576040452,
 							"behaviorType": "Timer",
 							"parameters": {
 								"tag": "\"dash_cooldown\""
 							},
 							"isInverted": true
+						},
+						{
+							"id": "is-timer-running",
+							"objectClass": "player_hitbox",
+							"sid": 300016960905307,
+							"behaviorType": "Timer",
+							"parameters": {
+								"tag": "\"slash\""
+							},
+							"isInverted": true
+						},
+						{
+							"id": "is-moving",
+							"objectClass": "player_hitbox",
+							"sid": 602986904691577,
+							"behaviorType": "8Direction"
 						}
 					],
 					"actions": [
 						{
 							"id": "start-timer",
-							"objectClass": "player_collision",
-							"sid": 471034494782224,
+							"objectClass": "player_hitbox",
+							"sid": 699788974789141,
 							"behaviorType": "Timer",
 							"parameters": {
-								"duration": "0.15",
+								"duration": "0.16",
 								"type": "once",
 								"tag": "\"dash\""
 							}
 						},
 						{
 							"id": "start-timer",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 514281684019198,
 							"behaviorType": "Timer",
 							"parameters": {
@@ -85,7 +136,7 @@
 						},
 						{
 							"id": "set-ignoring-input",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 579715506837026,
 							"disabled": true,
 							"behaviorType": "8Direction",
@@ -101,7 +152,7 @@
 					"conditions": [
 						{
 							"id": "is-timer-running",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 739161540808211,
 							"behaviorType": "Timer",
 							"parameters": {
@@ -112,22 +163,76 @@
 					"actions": [
 						{
 							"id": "set-max-speed",
-							"objectClass": "player_collision",
-							"sid": 594419586756333,
+							"objectClass": "player_hitbox",
+							"sid": 750000315156343,
 							"behaviorType": "8Direction",
 							"parameters": {
-								"max-speed": "256"
+								"max-speed": "320"
 							}
 						}
 					],
-					"sid": 300063111847266
+					"sid": 300063111847266,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "every-x-seconds",
+									"objectClass": "System",
+									"sid": 196077988305499,
+									"parameters": {
+										"interval-seconds": "0.04"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "spawn-another-object",
+									"objectClass": "player_hitbox",
+									"sid": 508795591759557,
+									"parameters": {
+										"object": "particle_dash",
+										"layer": "\"lower\"",
+										"image-point": "0",
+										"create-hierarchy": false,
+										"template-name": "\"\""
+									}
+								},
+								{
+									"id": "set-angle-of-motion",
+									"objectClass": "particle_dash",
+									"sid": 459133316580176,
+									"behaviorType": "Bullet",
+									"parameters": {
+										"angle": "random(0, 360)"
+									}
+								},
+								{
+									"id": "set-speed",
+									"objectClass": "particle_dash",
+									"sid": 516765958591440,
+									"behaviorType": "Bullet",
+									"parameters": {
+										"speed": "random(10, 15)\n"
+									}
+								},
+								{
+									"id": "start-fade",
+									"objectClass": "particle_dash",
+									"sid": 149320347107309,
+									"behaviorType": "Fade"
+								}
+							],
+							"sid": 187452744089120
+						}
+					]
 				},
 				{
 					"eventType": "block",
 					"conditions": [
 						{
 							"id": "on-timer",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 956324718825881,
 							"behaviorType": "Timer",
 							"parameters": {
@@ -138,7 +243,7 @@
 					"actions": [
 						{
 							"id": "set-ignoring-input",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 186273632280486,
 							"disabled": true,
 							"behaviorType": "8Direction",
@@ -148,7 +253,7 @@
 						},
 						{
 							"id": "set-max-speed",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 121967338347208,
 							"behaviorType": "8Direction",
 							"parameters": {
@@ -162,18 +267,146 @@
 					"eventType": "block",
 					"conditions": [
 						{
+							"id": "on-key-pressed",
+							"objectClass": "keyboard",
+							"sid": 504848838711544,
+							"parameters": {
+								"key": 88
+							}
+						},
+						{
+							"id": "is-timer-running",
+							"objectClass": "player_hitbox",
+							"sid": 951943365916683,
+							"behaviorType": "Timer",
+							"parameters": {
+								"tag": "\"slash_cooldown\""
+							},
+							"isInverted": true
+						},
+						{
+							"id": "is-timer-running",
+							"objectClass": "player_hitbox",
+							"sid": 109789011608931,
+							"behaviorType": "Timer",
+							"parameters": {
+								"tag": "\"dash\""
+							},
+							"isInverted": true
+						}
+					],
+					"actions": [
+						{
+							"id": "start-timer",
+							"objectClass": "player_hitbox",
+							"sid": 668358011066852,
+							"behaviorType": "Timer",
+							"parameters": {
+								"duration": "0.15",
+								"type": "once",
+								"tag": "\"slash\""
+							}
+						},
+						{
+							"id": "start-timer",
+							"objectClass": "player_hitbox",
+							"sid": 201853384568495,
+							"behaviorType": "Timer",
+							"parameters": {
+								"duration": "0.3",
+								"type": "once",
+								"tag": "\"slash_cooldown\""
+							}
+						}
+					],
+					"sid": 229546982358369
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-timer-running",
+							"objectClass": "player_hitbox",
+							"sid": 460640810505489,
+							"behaviorType": "Timer",
+							"parameters": {
+								"tag": "\"slash\""
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-opacity",
+							"objectClass": "player_attackbox",
+							"sid": 568756394084380,
+							"parameters": {
+								"opacity": "100"
+							}
+						},
+						{
+							"id": "set-collisions-enabled",
+							"objectClass": "player_attackbox",
+							"sid": 607566334865366,
+							"parameters": {
+								"collisions": "enabled"
+							}
+						}
+					],
+					"sid": 378609389077037
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-timer",
+							"objectClass": "player_hitbox",
+							"sid": 650470814323778,
+							"behaviorType": "Timer",
+							"parameters": {
+								"tag": "\"slash\""
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-opacity",
+							"objectClass": "player_attackbox",
+							"sid": 291610494550283,
+							"parameters": {
+								"opacity": "50"
+							}
+						},
+						{
+							"id": "set-collisions-enabled",
+							"objectClass": "player_attackbox",
+							"sid": 494667918030522,
+							"parameters": {
+								"collisions": "disabled"
+							}
+						}
+					],
+					"sid": 929914626976022
+				},
+				{
+					"eventType": "comment",
+					"text": "collisions"
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
 							"id": "is-between-values",
 							"objectClass": "System",
 							"sid": 746391073642547,
 							"parameters": {
-								"value": "round(player_collision.8Direction.MovingAngle)",
+								"value": "round(player_hitbox.8Direction.MovingAngle)",
 								"lower-bound": "0",
 								"upper-bound": "45"
 							}
 						},
 						{
 							"id": "is-moving",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 187480655796398,
 							"behaviorType": "8Direction"
 						}
@@ -198,14 +431,14 @@
 							"objectClass": "System",
 							"sid": 243712650492685,
 							"parameters": {
-								"value": "round(player_collision.8Direction.MovingAngle)",
+								"value": "round(player_hitbox.8Direction.MovingAngle)",
 								"lower-bound": "135",
 								"upper-bound": "225"
 							}
 						},
 						{
 							"id": "is-moving",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 178243624850012,
 							"behaviorType": "8Direction"
 						}
@@ -230,14 +463,14 @@
 							"objectClass": "System",
 							"sid": 572724037738748,
 							"parameters": {
-								"value": "round(player_collision.8Direction.MovingAngle)",
+								"value": "round(player_hitbox.8Direction.MovingAngle)",
 								"lower-bound": "45",
 								"upper-bound": "135"
 							}
 						},
 						{
 							"id": "is-moving",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 707737189800092,
 							"behaviorType": "8Direction"
 						}
@@ -262,14 +495,14 @@
 							"objectClass": "System",
 							"sid": 411520413562538,
 							"parameters": {
-								"value": "round(player_collision.8Direction.MovingAngle)",
+								"value": "round(player_hitbox.8Direction.MovingAngle)",
 								"lower-bound": "-135",
 								"upper-bound": "-45"
 							}
 						},
 						{
 							"id": "is-moving",
-							"objectClass": "player_collision",
+							"objectClass": "player_hitbox",
 							"sid": 716001800711305,
 							"behaviorType": "8Direction"
 						}
@@ -288,6 +521,364 @@
 				}
 			],
 			"sid": 459820782109710
+		},
+		{
+			"eventType": "group",
+			"disabled": false,
+			"title": "enemies",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each",
+							"objectClass": "System",
+							"sid": 342160618502060,
+							"parameters": {
+								"object": "enemy_hitbox"
+							}
+						}
+					],
+					"actions": [],
+					"sid": 304351485382009
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each",
+							"objectClass": "System",
+							"sid": 540136818075194,
+							"parameters": {
+								"object": "enemy_hitbox"
+							}
+						}
+					],
+					"actions": [],
+					"sid": 631702542913047,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "has-los-to-object",
+									"objectClass": "enemy_hitbox",
+									"sid": 150171674484680,
+									"behaviorType": "LineOfSight",
+									"parameters": {
+										"object": "player_hitbox",
+										"image-point": "0"
+									},
+									"isInverted": true
+								}
+							],
+							"actions": [
+								{
+									"id": "set-enabled",
+									"objectClass": "enemy_hitbox",
+									"sid": 488273952720983,
+									"behaviorType": "MoveTo",
+									"parameters": {
+										"enabled": true
+									}
+								},
+								{
+									"id": "set-boolean-instvar",
+									"objectClass": "enemy_hitbox",
+									"sid": 277590409714631,
+									"parameters": {
+										"instance-variable": "targeting",
+										"value": "false"
+									}
+								},
+								{
+									"id": "set-enabled",
+									"objectClass": "enemy_hitbox",
+									"sid": 322576196082135,
+									"behaviorType": "Bullet",
+									"parameters": {
+										"state": "disabled"
+									}
+								}
+							],
+							"sid": 741969966554498,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "is-calculating-path",
+											"objectClass": "enemy_hitbox",
+											"sid": 893659037375752,
+											"behaviorType": "Pathfinding",
+											"isInverted": true
+										}
+									],
+									"actions": [
+										{
+											"id": "find-path",
+											"objectClass": "enemy_hitbox",
+											"sid": 340988131584335,
+											"behaviorType": "Pathfinding",
+											"parameters": {
+												"x": "random(0, LayoutWidth)",
+												"y": "random(0, LayoutHeight)"
+											}
+										}
+									],
+									"sid": 858823059040116,
+									"disabled": true
+								}
+							]
+						}
+					]
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for-each",
+							"objectClass": "System",
+							"sid": 891991422510946,
+							"disabled": true,
+							"parameters": {
+								"object": "enemy_hitbox"
+							}
+						},
+						{
+							"id": "has-los-to-object",
+							"objectClass": "enemy_hitbox",
+							"sid": 651441570362518,
+							"behaviorType": "LineOfSight",
+							"parameters": {
+								"object": "player_hitbox",
+								"image-point": "0"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-enabled",
+							"objectClass": "enemy_hitbox",
+							"sid": 696294627109672,
+							"behaviorType": "Bullet",
+							"parameters": {
+								"state": "enabled"
+							}
+						},
+						{
+							"id": "set-angle-of-motion",
+							"objectClass": "enemy_hitbox",
+							"sid": 109730253583753,
+							"behaviorType": "Bullet",
+							"parameters": {
+								"angle": "angle(Self.X, Self.Y, player_hitbox.X, player_hitbox.Y)"
+							}
+						},
+						{
+							"id": "stop",
+							"objectClass": "enemy_hitbox",
+							"sid": 583589807977848,
+							"behaviorType": "Pathfinding"
+						},
+						{
+							"id": "stop",
+							"objectClass": "enemy_hitbox",
+							"sid": 296999376984696,
+							"behaviorType": "MoveTo"
+						},
+						{
+							"id": "set-enabled",
+							"objectClass": "enemy_hitbox",
+							"sid": 452698039689761,
+							"behaviorType": "MoveTo",
+							"parameters": {
+								"enabled": false
+							}
+						}
+					],
+					"sid": 395878153752797
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-path-found",
+							"objectClass": "enemy_hitbox",
+							"sid": 874352559232773,
+							"behaviorType": "Pathfinding"
+						}
+					],
+					"actions": [
+						{
+							"id": "move-along-pathfinding-path",
+							"objectClass": "enemy_hitbox",
+							"sid": 975635547796828,
+							"behaviorType": "MoveTo",
+							"parameters": {
+								"mode": "direct"
+							}
+						},
+						{
+							"id": "move-along-path",
+							"objectClass": "enemy_hitbox",
+							"sid": 769621884380389,
+							"disabled": true,
+							"behaviorType": "Pathfinding"
+						}
+					],
+					"sid": 838974013143566
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-failed-to-find-path",
+							"objectClass": "enemy_hitbox",
+							"sid": 174795730427776,
+							"behaviorType": "Pathfinding"
+						},
+						{
+							"id": "is-moving",
+							"objectClass": "enemy_hitbox",
+							"sid": 187223910724506,
+							"behaviorType": "MoveTo",
+							"isInverted": true
+						},
+						{
+							"id": "on-arrived",
+							"objectClass": "enemy_hitbox",
+							"sid": 490529449749990,
+							"disabled": true,
+							"behaviorType": "Pathfinding"
+						}
+					],
+					"actions": [],
+					"sid": 838342331185782,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "is-calculating-path",
+									"objectClass": "enemy_hitbox",
+									"sid": 158445477972805,
+									"behaviorType": "Pathfinding",
+									"isInverted": true
+								},
+								{
+									"id": "is-enabled",
+									"objectClass": "enemy_hitbox",
+									"sid": 355419114610867,
+									"behaviorType": "Bullet",
+									"isInverted": true
+								}
+							],
+							"actions": [
+								{
+									"id": "find-path",
+									"objectClass": "enemy_hitbox",
+									"sid": 403308259182534,
+									"behaviorType": "Pathfinding",
+									"parameters": {
+										"x": "random(0, LayoutWidth)",
+										"y": "random(0, LayoutHeight)"
+									}
+								}
+							],
+							"sid": 517507105263304
+						}
+					],
+					"isOrBlock": true
+				}
+			],
+			"sid": 904351751294754
+		},
+		{
+			"eventType": "group",
+			"disabled": true,
+			"title": "dev",
+			"description": "",
+			"isActiveOnStart": true,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-key-pressed",
+							"objectClass": "keyboard",
+							"sid": 208565961512885,
+							"parameters": {
+								"key": 32
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "start-recording-2",
+							"objectClass": "recording",
+							"sid": 950320805186747,
+							"parameters": {
+								"container": "mp4",
+								"video-codec": "h264",
+								"framerate": "60",
+								"audio-codec": "none",
+								"quality-kbps": "2500"
+							}
+						}
+					],
+					"sid": 646029647872317,
+					"disabled": true
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-key-pressed",
+							"objectClass": "keyboard",
+							"sid": 388221842663274,
+							"parameters": {
+								"key": 27
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "stop-recording",
+							"objectClass": "recording",
+							"sid": 812060939917556
+						}
+					],
+					"sid": 941194422221278,
+					"disabled": true
+				},
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "on-recording-ready",
+							"objectClass": "recording",
+							"sid": 903776055523721
+						}
+					],
+					"actions": [
+						{
+							"id": "invoke-download",
+							"objectClass": "browser",
+							"sid": 844645897881776,
+							"parameters": {
+								"url": "recording.RecordingURL",
+								"filename": "\"recording\""
+							}
+						}
+					],
+					"sid": 121046506613518,
+					"disabled": true
+				}
+			],
+			"sid": 358114180030151
 		}
 	],
 	"sid": 540301125081620

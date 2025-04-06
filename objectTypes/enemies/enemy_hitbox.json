@@ -1,20 +1,38 @@
 {
-	"name": "player_collision",
+	"name": "enemy_hitbox",
 	"plugin-id": "Sprite",
-	"sid": 968674318946171,
+	"sid": 313554406501580,
 	"isGlobal": false,
 	"editorNewInstanceIsReplica": true,
-	"instanceVariables": [],
+	"instanceVariables": [
+		{
+			"name": "targeting",
+			"type": "boolean",
+			"desc": "",
+			"show": true,
+			"sid": 428342859503259
+		}
+	],
 	"behaviorTypes": [
 		{
-			"behaviorId": "EightDir",
-			"name": "8Direction",
-			"sid": 619133529393491
+			"behaviorId": "Pathfinding",
+			"name": "Pathfinding",
+			"sid": 792567216132320
 		},
 		{
-			"behaviorId": "Timer",
-			"name": "Timer",
-			"sid": 923302688451890
+			"behaviorId": "MoveTo",
+			"name": "MoveTo",
+			"sid": 831737876869119
+		},
+		{
+			"behaviorId": "Bullet",
+			"name": "Bullet",
+			"sid": 632951488438040
+		},
+		{
+			"behaviorId": "LOS",
+			"name": "LineOfSight",
+			"sid": 427862894699927
 		}
 	],
 	"effectTypes": [],
@@ -31,13 +49,13 @@
 						"exportFormat": "lossless",
 						"exportQuality": 0.8,
 						"fileType": "image/png",
-						"imageSpriteId": 180667,
+						"imageSpriteId": 6417752,
 						"useCollisionPoly": true,
 						"duration": 1,
 						"tag": ""
 					}
 				],
-				"sid": 139026244410326,
+				"sid": 260337013279058,
 				"name": "Animation 1",
 				"isLooping": false,
 				"isPingPong": false,
